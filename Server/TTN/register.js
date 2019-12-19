@@ -3,9 +3,9 @@ const appID = "fe63b4366";
 const accessKey = "ttn-account-v2.0V3LSaszXVXKaxjwqItLzS6lyhDqBNL-kePSmurZkYY";
 
 var deviceUpdates= {
-    description: "Descriptio",
+    description: "---",
     appEui:"70b3d57ed0027075",
-    devEui: "9988776623443323",
+    devEui: "99887766234433453",
     devAddr: "11223344"
 };
 
@@ -15,9 +15,7 @@ async function register(deviceID,deviceUpdates) {
     console.log(await application.devices());
 }
 
-
-
-register("testing",deviceUpdates).catch(function (error) {
+register("pablo",deviceUpdates).catch(function (error) {
     console.error(error);
     process.exit(1);
 });
