@@ -4,10 +4,9 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var ttn = require("ttn");
 
-const appId="fe63b4366";
-const accessKey="ttn-account-v2.0V3LSaszXVXKaxjwqItLzS6lyhDqBNL-kePSmurZkYY";
+const appId="estasifinal";
+const accessKey="ttn-account-v2.9jqo-k2lKDy4F_5ncAt1NpTsFdtmo65sJ7REirOJEZc";
 // var app=new ttn.ApplicationClient('staging.thethingsnetwork.org',appId,accessKey);
-// app.regis
 
 
 ttn.data(appId,accessKey).
