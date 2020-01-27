@@ -13,7 +13,7 @@ ttn.data(appId,accessKey).
 then(function (client) {
     client.on("uplink",function (devID,payload) {
         console.log("mensaje recibido de",devID);
-        console.log(payload)
+        console.log(payload.payload_fields);
     })
 
 }).catch(function (error) {
