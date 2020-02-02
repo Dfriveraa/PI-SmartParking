@@ -1,2 +1,5 @@
 Server/node_modules
 Server/.idea
+node_modules
+.vscode/*
+.idea/*
