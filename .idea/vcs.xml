@@ -2,11 +2,5 @@
 <project version="4">
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/Ejemplo Danny/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/Envio básico todo bien (copy)/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/Envio básico todo bien/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/Envio con bluetooth/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/HelloWorldOta/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/Devices/test/.pio/libdeps/ttgo-t-beam/BME280_I2C_ESP32" vcs="Git" />
   </component>
 </project>

@@ -1,12 +1,10 @@
 var ttn = require("ttn");
-const appID = "fe63b4366";
-const accessKey = "ttn-account-v2.0V3LSaszXVXKaxjwqItLzS6lyhDqBNL-kePSmurZkYY";
+const appID = "piparking";
+const accessKey = "ttn-account-v2.58_sDnuGDKwAXip17AnCBziZSuwormjqCAutPSexSL8";
 
 var deviceUpdates= {
     description: "---",
-    appEui:"70b3d57ed0027075",
-    devEui: "99887766234433453",
-    devAddr: "11223344"
+    devEui: "0000000000000004"
 };
 
 async function register(deviceID,deviceUpdates) {
@@ -15,7 +13,7 @@ async function register(deviceID,deviceUpdates) {
     console.log(await application.devices());
 }
 
-register("pablo",deviceUpdates).catch(function (error) {
+register("daniel",deviceUpdates).catch(function (error) {
     console.error(error);
     process.exit(1);
 });
