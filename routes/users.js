@@ -12,4 +12,4 @@ router.delete(':id',userController.deleteUser);
 
 router.post('/',userController.createUser);
 
-module.exports  =router;
+module.exports  = router;

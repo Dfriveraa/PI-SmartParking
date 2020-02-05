@@ -1,14 +1,17 @@
 const getAllUsers=(req,res)=>{
+
     res.json({
         status:"Not found",
         message:"try again more later"
     })
+
 };
 const getUserById=(req,res)=>{
     res.json({
         status:"Not found",
         message:"try again more later"
     })
+
 };
 const createUser=(req,res)=>{
     res.json({
