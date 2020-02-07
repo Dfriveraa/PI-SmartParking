@@ -9,8 +9,9 @@ var socketController=require('./controllers/socketController');
 var cors = require('cors');
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(app.listen(3000,()=>{
-  console.log("Listen o port ",3000);
+const ttn=require('./TTN/ttn');
+var io = require('socket.io')(app.listen(3001,()=>{
+  console.log("Listen o port ",3001);
 }));
 
 app.use(logger('dev'));
@@ -25,7 +26,6 @@ const socketMiddleware =(req,res,next) => {
   req.io = io;
   req.server = server;
   next();
-
 };
 io.on('connection', socketController.emit);
 app.use('/', socketMiddleware ,indexRouter);
