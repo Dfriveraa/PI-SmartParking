@@ -8,8 +8,8 @@ var devicesRouter = require('./routes/devices');
 var cors = require('cors');
 var app = express();
 var server = require('http').Server(app);
-var io = require('socket.io')(app.listen(3001,()=>{
-  console.log("Listen o port ",3001);
+var io = require('socket.io')(app.listen(process.env.PORT || 3000,()=>{
+  console.log("Listen o port ",8080);
 }));
 
 var TheThingsSocket=require('./TTN/ttn');
