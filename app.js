@@ -5,15 +5,15 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var devicesRouter = require('./routes/devices');
-var socketController=require('./controllers/socketController');
 var cors = require('cors');
 var app = express();
 var server = require('http').Server(app);
-const ttn=require('./TTN/ttn');
 var io = require('socket.io')(app.listen(3001,()=>{
   console.log("Listen o port ",3001);
 }));
 
+var TheThingsSocket=require('./TTN/ttn');
+const tts=new TheThingsSocket(io);
 app.use(logger('dev'));
 app.use(express.json());
 app.use(cors());
@@ -27,12 +27,15 @@ const socketMiddleware =(req,res,next) => {
   req.server = server;
   next();
 };
-io.on('connection', socketController.emit);
+
+
 app.use('/', socketMiddleware ,indexRouter);
 app.use('/users', socketMiddleware  , usersRouter);
 app.use('/devices', devicesRouter);
+// const ttn=require('./TTN/ttn');
 
 module.exports = app;
+
 
 
 
