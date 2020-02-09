@@ -1,15 +1,17 @@
 const express=require('express');
 const router=express.Router();
-const userController=require('../controllers/userController.js');
+const userController=require('../controllers/userController');
+const authController=require('../controllers/authController');
+router.get('/',authController.verifyToken,userController.getAllUsers);
 
-router.get('/',userController.getAllUsers);
+router.get('/:id',authController.verifyToken,userController.getUserById);
 
-router.get('/:id',userController.getUserById);
+router.patch('/:id',authController.verifyToken,userController.updateUser);
 
-router.patch('/:id',userController.updateUser);
+router.delete(':id',authController.verifyToken,userController.deleteUser);
 
-router.delete(':id',userController.deleteUser);
+router.post('/',authController.verifyToken,userController.createUser);
 
-router.post('/',userController.createUser);
+router.post('/login',userController.loginUser);
 
 module.exports  = router;

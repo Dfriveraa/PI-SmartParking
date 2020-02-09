@@ -1,25 +1,11 @@
 const app=require('./app');
-const mongoose = require('mongoose');
-//const mongodb=`mongodb://localhost:27017/smartparking`;
-const mongodb='mongodb+srv://sht:nijOcHQF7ixdZWc4@cluster0-7av5w.mongodb.net/smartparking?retryWrites=true&w=majority';
-// mongoose.connect('mongodb+srv://sht:nijOcHQF7ixdZWc4@cluster0-7av5w.mongodb.net/smartparking?retryWrites=true&w=majority'
-mongoose.connect(mongodb
-, {
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
-      useUnifiedTopology: true
-  })
-  .then(() => console.log('DB connection successful!')).catch((error)=> {
-      console.log(error);
-});
+const database=require('./database');
+const io = require('socket.io')(app.listen(process.env.PORT || 3000,()=>{
+  console.log("Listen o port ",3000);
+}));
 
-// const MongoClient = require('mongodb').MongoClient;
-// const uri = "mongodb+srv://sht:nijOcHQF7ixdZWc4@cluster0-7av5w.mongodb.net/test?retryWrites=true&w=majority";
-// const client = new MongoClient(uri, { useNewUrlParser: true });
-// client.connect(err => {
-//   const collection = client.db("test").collection("devices");
-//   console.log(err);
-//   client.close();
-// });
+var TheThingsSocket=require('./TTN/ttn');
+new TheThingsSocket(io);
+database.connect();
+
 
