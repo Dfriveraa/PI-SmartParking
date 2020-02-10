@@ -10,8 +10,8 @@ class TheThingSocket{
         this.accessKey="ttn-account-v2.58_sDnuGDKwAXip17AnCBziZSuwormjqCAutPSexSL8";
         this.io=io.on('connection', socketController.emit);
         ttn.data(this.appId,this.accessKey).
-        then(client=> {
-            client.on("uplink", (devID,payload)=> {
+        then(async client=> {
+            client.on("uplink", async (devID,payload)=> {
                 if(payload.port===2){
                     console.log("Keep alive");
                 }
@@ -25,7 +25,7 @@ class TheThingSocket{
                     transaction.state=payload.payload_fields.estado;
                     transaction.height=payload.payload_fields.distancia;
                     transaction.battery=payload.payload_fields.bateria;
-                    transaction.save();
+                    await transaction.save();
                     io.emit('news', payload.payload_fields);
                 }
             })
