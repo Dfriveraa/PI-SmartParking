@@ -14,19 +14,19 @@ const getDeviceById=(req,res)=>{
         message:"try again more later"
     })
 };
-const createDevice=(req,res)=>{
+const createDevice=async (req,res)=>{
   console.log("connect");
-   var device=new deviceModel();
+   const device=new deviceModel();
 
-   device._id=450;
-   device.recorder_id="Juan pablo";
-   device.canvas_location.y=2;
-   device.canvas_location.x=1;
+   device._id=123;
+   device.recorder_id="Daniel Rivera";
+   device.canvas_location.y=45;
+   device.canvas_location.x=15;
    device.real_location.sector="Bloque 16";
    device.real_location.identifier=1;
-   device.app_eui="45648"
+   device.app_eui="45648";
    device.date=new Date();
-   device.save();
+   await device.save();
    // device._id=req.body._id*1;
    // device.title=req.body.title;
    // device.author=req.body.author;
