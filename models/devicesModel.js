@@ -42,9 +42,18 @@ const device = new Schema(
       required: [true,'Un dispostivo debe tener un appEui'],
       trim:true
     },
+    dev_eui:{
+      type:String,
+      required: [true,'Un dispostivo debe tener un devEui'],
+      trim:true
+    },
     date:{
       type:Date,
       required:[true,'Fecha en la que se registró del dispositivo']
+    },
+    state:{
+      type:String,
+      required:[true,'Por defecto inicia libre']
     }
   },{
     versionKey: false // You should be aware of the outcome after set to false
