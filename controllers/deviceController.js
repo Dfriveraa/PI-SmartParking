@@ -78,7 +78,6 @@ const deleteDevice=async (req,res)=>{
         data: null
       });
     }
-    console.log('holi');
     axios.delete(`http://us-west.thethings.network:8084/applications/piparking/devices/${req.params.id}`,{headers})
       .then(() => {
         res.status(200).json({
