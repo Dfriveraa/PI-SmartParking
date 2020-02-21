@@ -1,17 +1,17 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-const device = new Schema(
+const deviceSchema = new Schema(
   {
     _id:{
-      type:Number,
-      required:[true,'Un dispositivo debe tener un id'],
-      trim: true
-  },
+      type:String,
+      required:[true,'Un dispositivo debe tener un id']
+    },
     recorder_id:{
       type:String,
       required: [true,'Un dispositivo debe ser registrado por un usuaio'] ,
-      trim: true
+      trim: true,
+      default:'Admin'
   },
     canvas_location:{
       x:{
@@ -40,7 +40,8 @@ const device = new Schema(
     app_eui:{
       type:String,
       required: [true,'Un dispostivo debe tener un appEui'],
-      trim:true
+      trim:true,
+      default:'4564684684684'
     },
     dev_eui:{
       type:String,
@@ -49,13 +50,22 @@ const device = new Schema(
     },
     date:{
       type:Date,
-      required:[true,'Fecha en la que se registró del dispositivo']
+      required:[true,'Fecha en la que se registró del dispositivo'],
+      default: new Date()
     },
     state:{
       type:String,
-      required:[true,'Por defecto inicia libre']
+      required:[true,'Por defecto inicia libre'],
+      default:'Libre'
+    }
+    ,
+    lastKeepAlive:{
+      type:Date,
+      required:[false,'Por defecto inicia libre'],
+      default:new Date()
     }
   },{
     versionKey: false // You should be aware of the outcome after set to false
   });
-module.exports = mongoose.model('Device',device);
+
+module.exports = mongoose.model('Device',deviceSchema);

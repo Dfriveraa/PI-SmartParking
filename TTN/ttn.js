@@ -24,22 +24,20 @@ class TheThingSocket{
        }
     initEvents(){
         this.client.on("uplink", async (devID,payload)=> {
+          console.log(payload.metadata.time);
             if(payload.port===2){
-                console.log("Keep alive");
+                await deviceModel.findOneAndUpdate({_id:devID},{lastKeepAlive:new Date()});
             }
             else {
-                console.log(payload.payload_fields);
-                const transaction=new transactionModel();
-                transaction.location.sector="Bloque 16";
-                transaction.location.identifier=15;
-                transaction.date=new Date();
-                transaction.state=payload.payload_fields.estado;
-                transaction.height=payload.payload_fields.distancia;
-                transaction.battery=payload.payload_fields.bateria;
-                await transaction.save();
-                console.log(devID,payload.payload_fields);
-                await deviceModel.findByIdAndUpdate(devID*1,{state:payload.payload_fields.estado});
-
+              console.log(payload.payload_fields);
+                const {state,height,battery}=payload.payload_fields;
+                if(state==='Ocupado'){
+                  const location={sector:'Bloque 16',identifier:15};
+                  const start=new Date();
+                  const transaction=new transactionModel({state,height,battery,location,start});
+                  await transaction.save();
+                }
+                await deviceModel.findByIdAndUpdate(devID*1,{state});
                 // this.io.emit('news', {
                 //   newState:payload.payload_fields.estado,
                 //   device:devID*1

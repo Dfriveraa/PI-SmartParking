@@ -19,53 +19,45 @@ const getDeviceById=(req,res)=>{
     })
 };
 const createDevice=async (req,res)=>{
-  let device=new deviceModel();
-  if(req.body.id.length===1){
-    console.log('jejejje')
-  }
-  device._id=req.body.id;
-  device.recorder_id='Admin';
-  device.canvas_location.x=req.body.canvas_location.x;
-  device.canvas_location.y=req.body.canvas_location.y;
-  device.real_location.sector=req.body.real_location.sector;
-  device.real_location.identifier=req.body.real_location.identifier;
-  device.app_eui='4564684684684';
-  device.date=new Date();
-  device.dev_eui=req.body.dev_eui;
-  device.state='Libre';
+  const {canvas_location,real_location,dev_eui}=req.body;
+  const _id=`${real_location.sector}_${real_location.identifier}`.toLowerCase();
+  let date=new Date();
+  let device=new deviceModel({_id,canvas_location,real_location,dev_eui,date});
+
   await device.save()
     .then(e=>{
       const data= {
-        "dev_id":req.body.id,
+        "dev_id":_id,
         "lorawan_device": {
           "activation_constraints": "otaa",
           "app_eui": "70B3D57ED002740B",
           "app_id": "piparking",
           "app_key": "01020304050607080102030405060708",
-          "dev_eui": req.body.dev_eui,
-          "dev_id": req.body.id,
+          "dev_eui": dev_eui,
+          "dev_id": _id,
           "disable_f_cnt_check": true,
           "uses32_bit_f_cnt": true
         }
       };
-        axios.post('http://us-west.thethings.network:8084/applications/piparking/devices',data,{headers})
-          .then(response => {
-            if(response.status===404){
-              res.body=response.body;
-              res.status(404).send();
-            }
-          })
-          .catch(error => {
-            console.log(error);
-          });
-        res.status(200).json({
-          message:'Created'
-        })}
 
-    ).catch(e=>{
+        axios.post('http://us-west.thethings.network:8084/applications/piparking/devices',data,{headers})
+          .then(response =>
+          {
+            return res.status(200).json(
+              {
+              message:'Created'
+              })
+          }).catch(error =>
+              {
+                res.status(502).json({
+                  message:'Error',
+                  error:error.response.data
+                })});
+        }).catch(e=>{
       res.status(502).json({
-        message:'Created',
-        error:e
+        message:'Error',
+        error:e,
+        lugar:'ttn'
       })
     });
   };

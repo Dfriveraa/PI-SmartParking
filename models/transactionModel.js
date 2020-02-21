@@ -15,9 +15,12 @@ const transaction = new Schema(
         trim: true
       }
     },
-    date:{
+    start:{
       type:Date,
       required:[true,'Fecha en la que se registró del dispositivo']
+    },
+    end:{
+      type:Date,
     },
     state:{
       type:String,
