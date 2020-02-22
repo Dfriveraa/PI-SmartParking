@@ -1,9 +1,8 @@
 const deviceModel=require('./../models/devicesModel');
 const axios = require('axios');
-const AppError = require('./../utils/appError');
 const headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'Key ttn-account-v2.58_sDnuGDKwAXip17AnCBziZSuwormjqCAutPSexSL8'
+  'Authorization': `Key ${process.env.TTN_KEY}`
 };
 const getAllDevices=async(req,res)=>{
    deviceModel.find({}, (err, l) =>{

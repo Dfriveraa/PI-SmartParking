@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const mongodb=`mongodb://localhost:27017/smartparking`;
-//const mongodb='mongodb+srv://sht:nijOcHQF7ixdZWc4@cluster0-7av5w.mongodb.net/smartparking?retryWrites=true&w=majority';
 exports.connect=()=>{
-  mongoose.connect(mongodb
+  mongoose.connect(process.env.DB_HOST
     , {
       useNewUrlParser: true,
       useCreateIndex: true,

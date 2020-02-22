@@ -3,8 +3,8 @@ const transactionModel=require('./../models/transactionModel');
 const deviceModel=require('./../models/devicesModel');
 class TheThingSocket{
      constructor(io) {
-        this.appId="piparking";
-        this.accessKey="ttn-account-v2.58_sDnuGDKwAXip17AnCBziZSuwormjqCAutPSexSL8";
+        this.appId=process.env.TTN_APPID;
+        this.accessKey=process.env.TTN_KEY;
         this.client=new ttn.DataClient(this.appId,this.accessKey,'us-west.thethings.network');
         this.io=io;
         this.io.on('connection', socket=>{
