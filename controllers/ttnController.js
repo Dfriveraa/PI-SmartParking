@@ -5,7 +5,7 @@ const client = mqtt.connect("mqtts://us-west.thethings.network", {
   password: process.env.TTN_KEY
 });
 const transactionModel = require("./../models/transactionModel");
-const deviceModel = require("./../models/devicesModel");
+const deviceModel = require("../models/deviceModel");
 
 const opts = {
   port: 1, // LoRaWAN FPort

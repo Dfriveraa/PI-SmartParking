@@ -1,4 +1,4 @@
-const deviceModel = require("./../models/devicesModel");
+const deviceModel = require("../models/deviceModel");
 const axios = require("axios");
 const headers = {
   "Content-Type": "application/json",
