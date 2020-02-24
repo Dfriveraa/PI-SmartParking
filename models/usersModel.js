@@ -1,24 +1,26 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 const user = new Schema(
   {
-    institutional_user:{
+    institutional_user: {
       type: String,
-      required: [true, 'Usuario instuticional UdeA'],
+      required: [true, "Usuario instuticional UdeA"],
       trim: true
     },
-    name:{
+    name: {
       type: String,
-      required: [true, 'Nombre del usuario'],
+      required: [true, "Nombre del usuario"],
       trim: true
     },
-    password:{
+    password: {
       type: String,
-      required: [true, 'Contraseña del usuario'],
+      required: [true, "Contraseña del usuario"],
       trim: true
     }
-  },{
+  },
+  {
     versionKey: false // You should be aware of the outcome after set to false
-  });
-module.exports = mongoose.model('Users',user);
+  }
+);
+module.exports = mongoose.model("Users", user);

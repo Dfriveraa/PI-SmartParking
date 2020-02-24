@@ -1,15 +1,20 @@
-const express=require('express');
-const router=express.Router();
-const deviceController=require('./../controllers/deviceController');
+const express = require("express");
+const router = express.Router();
+const deviceController = require("./../controllers/deviceController");
+const ttnController = require("./../controllers/ttnController");
 
-router.get('/:id',deviceController.getDeviceById);
+router.get("/status", deviceController.getCountBySector);
 
-router.patch('/:id',deviceController.updateDevice);
+router.get("/:id", deviceController.getDeviceById);
 
-router.delete('/:id',deviceController.deleteDevice);
+router.patch("/:id", deviceController.updateDevice);
 
-router.post('/',deviceController.createDevice);
+router.delete("/:id", deviceController.deleteDevice);
 
-router.get('/',deviceController.getAllDevices);
+router.post("/", deviceController.createDevice);
 
-module.exports  =router;
+router.get("/", deviceController.getAllDevices);
+
+router.post("/message", ttnController.sendDown);
+
+module.exports = router;

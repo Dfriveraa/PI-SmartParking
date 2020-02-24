@@ -1,17 +1,17 @@
-const express=require('express');
-const router=express.Router();
-const userController=require('../controllers/userController');
-const authController=require('../controllers/authController');
-router.get('/',authController.verifyToken,userController.getAllUsers);
+const express = require("express");
+const router = express.Router();
+const userController = require("../controllers/userController");
+const authController = require("../controllers/authController");
+router.get("/", authController.verifyToken, userController.getAllUsers);
 
-router.get('/:id',authController.verifyToken,userController.getUserById);
+router.get("/:id", authController.verifyToken, userController.getUserById);
 
-router.patch('/:id',authController.verifyToken,userController.updateUser);
+router.patch("/:id", authController.verifyToken, userController.updateUser);
 
-router.delete(':id',authController.verifyToken,userController.deleteUser);
+router.delete(":id", authController.verifyToken, userController.deleteUser);
 
-router.post('/',authController.verifyToken,userController.createUser);
+router.post("/", authController.verifyToken, userController.createUser);
 
-router.post('/login',userController.loginUser);
+router.post("/login", userController.loginUser);
 
-module.exports  = router;
+module.exports = router;

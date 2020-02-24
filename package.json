@@ -18,9 +18,9 @@
     "mongodb": "^3.5.2",
     "mongoose": "^5.8.11",
     "morgan": "~1.9.1",
+    "mqtt": "^3.0.0",
     "nodemon": "^2.0.2",
-    "socket.io": "^2.3.0",
-    "ttn": "^2.3.3"
+    "socket.io": "^2.3.0"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
