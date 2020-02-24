@@ -10,9 +10,9 @@ const getAllDevices = async (req, res) => {
   });
 };
 const getDeviceById = (req, res) => {
-  const device = deviceModel.find(req.params.id,(err, l) =>{
+  const device = deviceModel.find(req.params.id, (err, l) => {
     return res.status(200).send(l);
-  } );
+  });
   res.json({
     status: "Not found",
     message: "try again more later"
