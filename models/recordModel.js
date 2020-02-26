@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-const transaction = new Schema(
+const record = new Schema(
   {
     location: {
       sector: {
@@ -42,4 +42,4 @@ const transaction = new Schema(
     versionKey: false // You should be aware of the outcome after set to false
   }
 );
-module.exports = mongoose.model("Transaction", transaction);
+module.exports = mongoose.model("Record", record);

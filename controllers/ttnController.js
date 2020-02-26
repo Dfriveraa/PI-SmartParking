@@ -4,7 +4,7 @@ const client = mqtt.connect("mqtts://us-west.thethings.network", {
   port: 8883,
   password: process.env.TTN_KEY
 });
-const transactionModel = require("./../models/transactionModel");
+const recordModel = require("../models/recordModel");
 const deviceModel = require("../models/deviceModel");
 
 const opts = {
@@ -24,21 +24,26 @@ const initIo = io => {
     });
   });
 };
-const saveTransaction = async uplink => {
+const saveRecord = async uplink => {
   console.log(uplink.payload_fields);
   const { state, height, battery } = uplink.payload_fields;
+  let aux = uplink.dev_id.split("_");
+  const location = { sector: aux[0], identifier: aux[1] * 1 };
   if (state === "Ocupado") {
-    let aux = uplink.dev_id.split("_");
-    const location = { sector: aux[0], identifier: aux[1] };
     const start = new Date();
-    const transaction = new transactionModel({
+    const record = new recordModel({
       state,
       height,
       battery,
       location,
       start
     });
-    await transaction.save();
+    await record.save();
+  } else {
+    await recordModel.updateOne(
+      { location: location, state: "Ocupado" },
+      { end: Date.now(), state: "Libre" }
+    );
   }
   await deviceModel.findByIdAndUpdate(uplink.dev_id, { state });
 };
@@ -54,7 +59,7 @@ const listen = io => {
             { lastKeepAlive: new Date() }
           );
         } else {
-          await saveTransaction(uplink);
+          await saveRecord(uplink);
         }
         deviceModel.find({}, (err, list) => {
           io.emit("initial", list);
