@@ -19,6 +19,9 @@ const getDeviceById = (req, res) => {
   });
 };
 const createDevice = async (req, res) => {
+  console.log('Llego');
+  console.log(req.body);
+
   const { canvas_location, real_location, dev_eui } = req.body;
   const _id = `${real_location.sector}_${real_location.identifier}`.toLowerCase();
   let date = new Date();
@@ -29,10 +32,11 @@ const createDevice = async (req, res) => {
     dev_eui,
     date
   });
-
+  console.log(device);
   await device
     .save()
     .then(e => {
+      console.log(e);
       const data = {
         dev_id: _id,
         lorawan_device: {
@@ -46,7 +50,7 @@ const createDevice = async (req, res) => {
           uses32_bit_f_cnt: true
         }
       };
-
+      console.log(data);
       axios
         .post(
           "http://us-west.thethings.network:8084/applications/piparking/devices",
@@ -59,6 +63,7 @@ const createDevice = async (req, res) => {
           });
         })
         .catch(error => {
+          console.log(error);
           res.status(502).json({
             message: "Error",
             error: error.response.data
