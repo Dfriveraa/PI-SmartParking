@@ -28,14 +28,14 @@ const saveRecord = async uplink => {
   console.log(uplink.payload_fields);
   const { state, height, battery } = uplink.payload_fields;
   let aux = uplink.dev_id.split("_");
-  const location = { sector: aux[0], identifier: aux[1] * 1 };
+  const real_location = { sector: aux[0], identifier: aux[1] * 1 };
   if (state === "Ocupado") {
     const start = new Date();
     const record = new recordModel({
       state,
       height,
       battery,
-      location,
+      real_location,
       start
     });
     await record.save();

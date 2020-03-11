@@ -3,20 +3,20 @@ var Schema = mongoose.Schema;
 
 const record = new Schema(
   {
-    location: {
-      sector: {
-        type: String,
-        required: [
-          true,
-          "Debe indicar a que parqueadero pertenece el dispositivo"
-        ],
-        trim: true
-      },
-      identifier: {
-        type: Number,
-        required: [true, "Debe indicar con "],
-        trim: true
-      }
+    real_location: {
+          sector: {
+            type: String,
+            required: [
+              true,
+              "Debe indicar a que parqueadero pertenece el dispositivo"
+            ],
+            trim: true
+          },
+          identifier: {
+            type: Number,
+            required: [true, "Debe indicar con "],
+            trim: true
+          }
     },
     start: {
       type: Date,
