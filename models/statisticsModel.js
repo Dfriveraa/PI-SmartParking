@@ -1,7 +1,7 @@
 var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
-const stadisticSchema = new Schema(
+const statisticSchema = new Schema(
     {
         // canvas_location: {
         //     x: {
@@ -15,20 +15,45 @@ const stadisticSchema = new Schema(
         //         trim: true
         //     }
         // },
-        real_location: {
-            sector: {
-                type: String,
-                required: [
-                    true,
-                    "Debe indicar a que parqueadero pertenece el dispositivo"
-                ],
+        // real_location: {
+        //     sector: {
+        //         type: String,
+        //         required: [
+        //             true,
+        //             "Debe indicar a que parqueadero pertenece el dispositivo"
+        //         ],
+        //         trim: true
+        //     },
+        //     identifier: {
+        //         type: Number,
+        //         required: [true, "Debe indicar con "],
+        //         trim: true
+        //     }
+        // },
+        sector: {
+            type: String,
+            required: [
+                true,
+                "Debe indicar a que parqueadero pertenece el dispositivo"
+            ],
+            trim: true
+        },
+        canvas_location: {
+            x: {
+                type: Number,
+                required: [true, "Coordenada x"],
                 trim: true
             },
-            identifier: {
+            y: {
                 type: Number,
-                required: [true, "Debe indicar con "],
+                required: [true, "Coordenada y"],
                 trim: true
             }
+        },
+        device:{
+            type:String,
+            ref:"Device",
+            required: [true, "Id del dispositivo al que pertenece"]
         },
         total_minutes: {
             type: Number,
@@ -63,4 +88,4 @@ const stadisticSchema = new Schema(
     }
 );
 
-module.exports = mongoose.model("Stadistics", stadisticSchema);
+module.exports = mongoose.model("Statistics", statisticSchema);

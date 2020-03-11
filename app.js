@@ -5,6 +5,7 @@ const logger = require("morgan");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/userRoute");
 const devicesRouter = require("./routes/deviceRoute");
+const statisticsRouter = require("./routes/statisticRoute");
 const cors = require("cors");
 const app = express();
 
@@ -18,5 +19,6 @@ app.use(express.static(path.join(__dirname, "public/SmartParking")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/devices", devicesRouter);
+app.use("/statistics", statisticsRouter);
 
 module.exports = app;

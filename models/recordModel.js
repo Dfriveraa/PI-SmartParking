@@ -3,7 +3,12 @@ var Schema = mongoose.Schema;
 
 const record = new Schema(
   {
-    real_location: {
+    device:{
+        type:String,
+        ref:"Device",
+        required: [true, "Id del dispositivo al que pertenece"]
+    },
+    location: {
           sector: {
             type: String,
             required: [
@@ -28,10 +33,6 @@ const record = new Schema(
     state: {
       type: String,
       required: [true, "Se debe de indicar el cambio de estado"]
-    },
-    height: {
-      type: Number,
-      required: [true, "A qué altura se registró el cambio de estado"]
     },
     battery: {
       type: String,
