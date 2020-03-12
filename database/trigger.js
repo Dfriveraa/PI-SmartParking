@@ -1,9 +1,6 @@
 const recordsModel = require("../models/recordModel");
 const devicesModel = require("../models/deviceModel");
 const statisticsModel = require("../models/statisticsModel");
-
-const database = require("./database");
-database.connect();
 //Callback hell
 
 // recordsModel.find({}).populate('device').exec((err,data)=>{
@@ -16,10 +13,8 @@ database.connect();
 // });
 
 // a=getDevices();
-const minutesOfWeek=5520;
-
-
 const generateStatistics=async ()=>{
+    const minutesOfWeek=5520;
     await devicesModel.find({},(err,devices)=>{
         devices.map(async device=>{
             await recordsModel.find({"state":"Libre","device":device._id}).populate('device').exec(async (err,records)=>{
@@ -44,8 +39,7 @@ const generateStatistics=async ()=>{
 
     });
 };
-generateStatistics();
-// module.exports={generateStatistics}
+module.exports={generateStatistics};
 //getDevices();
 // const month=
 // const minutesOfWeek=5520;
@@ -69,9 +63,7 @@ const calculateTime=(start,end)=>{
     return a1+a2;
 };
 
-
-
-function getWeekOfMonth(date) {
+const getWeekOfMonth=(date)=> {
     const startWeekDayIndex = 0; // 1 MonthDay 0 Sundays
     const firstDate = new Date(date.getFullYear(), date.getMonth(), 1);
     const firstDay = firstDate.getDay();
