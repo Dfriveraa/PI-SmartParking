@@ -13,33 +13,34 @@ const statisticsModel = require("../models/statisticsModel");
 // });
 
 // a=getDevices();
-const generateStatistics=async ()=>{
-    const minutesOfWeek=5520;
-    await devicesModel.find({},(err,devices)=>{
-        devices.map(async device=>{
-            await recordsModel.find({"state":"Libre","device":device._id}).populate('device').exec(async (err,records)=>{
-                const a=new statisticsModel();
-                const date=new Date();
-                const month= date.getMonth()+1;
-                const week=getWeekOfMonth(date);
-                let total=0;
-                records.map(record=>{
-                    total=total+calculateTime(record.start,record.end)
-                });
-                a.device=device._id;
-                a.sector=device.real_location.sector;
-                a.canvas_location=device.canvas_location;
-                a.total_minutes=total;
-                a.percentage=(total/minutesOfWeek)*100;
-                a.date={month,week};
-                await a.save();
-            })
-
-        })
-
+const generateStatistics = async () => {
+  const minutesOfWeek = 5520;
+  await devicesModel.find({}, (err, devices) => {
+    devices.map(async device => {
+      await recordsModel
+        .find({ state: "Libre", device: device._id })
+        .populate("device")
+        .exec(async (err, records) => {
+          const a = new statisticsModel();
+          const date = new Date();
+          const month = date.getMonth() + 1;
+          const week = getWeekOfMonth(date);
+          let total = 0;
+          records.map(record => {
+            total = total + calculateTime(record.start, record.end);
+          });
+          a.device = device._id;
+          a.sector = device.real_location.sector;
+          a.canvas_location = device.canvas_location;
+          a.total_minutes = total;
+          a.percentage = (total / minutesOfWeek) * 100;
+          a.date = { month, week };
+          await a.save();
+        });
     });
+  });
 };
-module.exports={generateStatistics};
+module.exports = { generateStatistics };
 //getDevices();
 // const month=
 // const minutesOfWeek=5520;
@@ -57,26 +58,26 @@ module.exports={generateStatistics};
 //     console.log(total);
 // });
 //
-const calculateTime=(start,end)=>{
-    let a1=(end.getHours()-start.getHours())*60;
-    let a2=(end.getMinutes()-start.getMinutes());
-    return a1+a2;
+const calculateTime = (start, end) => {
+  let a1 = (end.getHours() - start.getHours()) * 60;
+  let a2 = end.getMinutes() - start.getMinutes();
+  return a1 + a2;
 };
 
-const getWeekOfMonth=(date)=> {
-    const startWeekDayIndex = 0; // 1 MonthDay 0 Sundays
-    const firstDate = new Date(date.getFullYear(), date.getMonth(), 1);
-    const firstDay = firstDate.getDay();
+const getWeekOfMonth = date => {
+  const startWeekDayIndex = 0; // 1 MonthDay 0 Sundays
+  const firstDate = new Date(date.getFullYear(), date.getMonth(), 1);
+  const firstDay = firstDate.getDay();
 
-    let weekNumber = Math.ceil((date.getDate() + firstDay) / 7);
-    if (startWeekDayIndex === 1) {
-        if (date.getDay() === 0 && date.getDate() > 1) {
-            weekNumber -= 1;
-        }
-
-        if (firstDate.getDate() === 1 && firstDay === 0 && date.getDate() > 1) {
-            weekNumber += 1;
-        }
+  let weekNumber = Math.ceil((date.getDate() + firstDay) / 7);
+  if (startWeekDayIndex === 1) {
+    if (date.getDay() === 0 && date.getDate() > 1) {
+      weekNumber -= 1;
     }
-    return weekNumber;
-}
+
+    if (firstDate.getDate() === 1 && firstDay === 0 && date.getDate() > 1) {
+      weekNumber += 1;
+    }
+  }
+  return weekNumber;
+};

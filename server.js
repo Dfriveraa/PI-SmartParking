@@ -9,4 +9,4 @@ const io = require("socket.io")(
 );
 database.connect();
 ttn.listen(io);
-require("./routines/routine");
+//require("./routines/routine");

@@ -5,7 +5,7 @@ const ttnController = require("./../controllers/ttnController");
 
 router.get("/status", deviceController.getCountBySector);
 
-router.get("/:id", deviceController.getDeviceById);
+router.get("/:sector", deviceController.getDevicesBySector);
 
 router.patch("/:id", deviceController.updateDevice);
 

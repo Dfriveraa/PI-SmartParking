@@ -9,17 +9,18 @@ const getAllDevices = async (req, res) => {
     return res.status(200).send(l);
   });
 };
-const getDeviceById = (req, res) => {
-  const device = deviceModel.find(req.params.id, (err, l) => {
-    return res.status(200).send(l);
-  });
-  res.json({
-    status: "Not found",
-    message: "try again more later"
-  });
+const getDevicesBySector = (req, res) => {
+  console.log(req.params);
+  deviceModel.find(
+    { "real_location.sector": req.params.sector },
+    { lastKeepAlive: 1, real_location: 1, state: 1, dev_eui: 1 },
+    (err, l) => {
+      return res.status(200).send(l);
+    }
+  );
 };
 const createDevice = async (req, res) => {
-  console.log('Llego');
+  console.log("Llego");
   console.log(req.body);
 
   const { canvas_location, real_location, dev_eui } = req.body;
@@ -80,6 +81,7 @@ const createDevice = async (req, res) => {
 };
 
 const deleteDevice = async (req, res) => {
+  console.log(req.params);
   const device = await deviceModel.findByIdAndDelete(req.params.id);
   if (!device) {
     return res.status(404).json({
@@ -104,6 +106,10 @@ const deleteDevice = async (req, res) => {
         data: error.response.data
       });
     });
+  res.status(200).json({
+    status: "Success",
+    data: "Delete success"
+  });
 };
 const updateDevice = (req, res) => {
   res.json({
@@ -124,7 +130,7 @@ const getCountBySector = (req, res) => {
 };
 module.exports = {
   getAllDevices,
-  getDeviceById,
+  getDevicesBySector,
   updateDevice,
   deleteDevice,
   createDevice,

@@ -3,25 +3,25 @@ var Schema = mongoose.Schema;
 
 const record = new Schema(
   {
-    device:{
-        type:String,
-        ref:"Device",
-        required: [true, "Id del dispositivo al que pertenece"]
+    device: {
+      type: String,
+      ref: "Device",
+      required: [true, "Id del dispositivo al que pertenece"]
     },
     location: {
-          sector: {
-            type: String,
-            required: [
-              true,
-              "Debe indicar a que parqueadero pertenece el dispositivo"
-            ],
-            trim: true
-          },
-          identifier: {
-            type: Number,
-            required: [true, "Debe indicar con "],
-            trim: true
-          }
+      sector: {
+        type: String,
+        required: [
+          true,
+          "Debe indicar a que parqueadero pertenece el dispositivo"
+        ],
+        trim: true
+      },
+      identifier: {
+        type: Number,
+        required: [true, "Debe indicar con "],
+        trim: true
+      }
     },
     start: {
       type: Date,

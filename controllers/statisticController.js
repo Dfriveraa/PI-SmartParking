@@ -5,21 +5,26 @@
 //     month:
 //     week:
 // }
-const Statistic=require("../models/statisticsModel");
+const Statistic = require("../models/statisticsModel");
 
-const getStatistics=(req,res)=>{
-    const{month,week,zone}=req.body;
-    console.log(req.body);
-    Statistic.find({date:{month,week},sector:zone},{date:1,percentage:1,canvas_location:1},(err,document)=>{
-        if(err)res.status(502).json({
-            status:502,
-            message:'Error interno del servidor'
+const getStatistics = (req, res) => {
+  const { month, week, sector } = req.body;
+  console.log(req.body);
+  Statistic.find(
+    { date: { month, week }, sector: sector },
+    { date: 1, percentage: 1, canvas_location: 1 },
+    (err, document) => {
+      if (err)
+        res.status(502).json({
+          status: 502,
+          message: "Error interno del servidor"
         });
-        else {
-            console.log(document);
-            res.status(200).send(document);
-        }
-    })
-}
+      else {
+        console.log(document);
+        res.status(200).send(document);
+      }
+    }
+  );
+};
 
-module.exports={getStatistics};
+module.exports = { getStatistics };
