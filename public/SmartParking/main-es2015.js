@@ -1659,7 +1659,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let WebSocketService = class WebSocketService {
     constructor() {
-        this.uri = "ws://localhost:3000";
+        this.uri = "ws://134.122.19.117:3000";
     }
     connect() {
         this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__(this.uri);
@@ -1706,8 +1706,8 @@ __webpack_require__.r(__webpack_exports__);
 
 const environment = {
     production: false,
-    apiBaseUrl: 'http://localhost:3000',
-    apiWebSocket: 'ws://localhost:3000'
+    apiBaseUrl: 'http://134.122.19.117:3000',
+    apiWebSocket: 'ws://134.122.19.117:3000'
     // apiBaseUrl: 'https://smartparkingpi.herokuapp.com/',
     // apiWebSocket:'ws://smartparkingpi.herokuapp.com/'
 };
