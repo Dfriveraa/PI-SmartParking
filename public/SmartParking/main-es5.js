@@ -211,7 +211,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "\n<!-- <div>\n    <img src=\"/assets/Img/SmartParking.png\" width=\"200\" height=\"200\" class=\"rounded float-left\" alt=\"...\">\n    <img src=\"/assets/Img/SmartParking.png\" width=\"200\" height=\"200\" class=\"rounded float-right\" alt=\"...\">\n</div> -->\n\n<!-- <app-celdas></app-celdas> -->\n<div>\n    <h1>Celdas Disponibles</h1>\n</div>\n\n<div>\n    <canvas id=\"Canvas\" text-a width=\"800\" height=\"600\"></canvas>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 23.7%; top: 57%\" id=\"ferrocarril\" \n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToFerrocarril()\">\n            {{Disponibles[0]}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 71.5%; top: 35%\" id=\"barranquilla\" \n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToBarranquilla()\">\n            {{Disponibles[1]}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 65%; top: 100%\" id=\"regional\" \n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToRegional()\">\n            {{Disponibles[2]}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 52.5%; top: 89%\" id=\"MuuA\" \n            src=\"../../../../assets/Img/Ubicacion.png\" width=\"70\" height=\"70\" (click)=\"ToMuuA()\">\n            {{Disponibles[3]}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 56%; top: 47%\" id=\"Bloque18\" \n            src=\"../../../../assets/Img/Ubicacion.png\" width=\"70\" height=\"70\" (click)=\"ToMap()\">\n            {{Disponibles[4]}}\n        </h2>\n    </div>\n</div>\n\n<!-- <div style=\"width: 150px; margin: 0 auto\">\n    <button type=\"button\" class=\"btn btn-outline-success\" (click)=\"ToMap()\"> Aceptar </button>\n</div> -->\n\n\n\n<style>\n    canvas{\n        margin: 0 auto;\n        display: block;\n        align-content: center;\n    }\n    h1 {\n        text-align: center;\n        margin-top: 20px;\n    }\n    h2 {\n        text-align: center;\n        color: rgb(63, 57, 57);\n        font-size: 40px;\n    }\n</style>\n";
+    __webpack_exports__["default"] = "\n<!-- <div>\n    <img src=\"/assets/Img/SmartParking.png\" width=\"200\" height=\"200\" class=\"rounded float-left\" alt=\"...\">\n    <img src=\"/assets/Img/SmartParking.png\" width=\"200\" height=\"200\" class=\"rounded float-right\" alt=\"...\">\n</div> -->\n\n<!-- <app-celdas></app-celdas> -->\n<div>\n    <h1>Celdas Disponibles</h1>\n</div>\n\n<div>\n    <canvas id=\"Canvas\" text-a width=\"800\" height=\"600\"></canvas>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 23.7%; top: 57%\" id=\"ferrocarril\"\n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToFerrocarril()\">\n            {{parqueadero18._id }} {{parqueadero18.count }}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 71.5%; top: 35%\" id=\"barranquilla\"\n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToBarranquilla()\">\n            {{parqueaderomuua._id}} {{parqueaderomuua.count}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 65%; top: 100%\" id=\"regional\"\n            src=\"../../../../assets/Img/SmartParkingCarroBlanco.png\" width=\"70\" height=\"70\" (click)=\"ToRegional()\">\n            {{circunregional._id}} {{circunregional.count}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 52.5%; top: 89%\" id=\"MuuA\"\n            src=\"../../../../assets/Img/Ubicacion.png\" width=\"70\" height=\"70\" (click)=\"ToMuuA()\">\n            {{circunbarranquilla._id}} {{circunbarranquilla.count}}\n        </h2>\n    </div>\n    <div>\n        <h2 class=\"card-text\">\n            <img style= \"position:absolute; left: 56%; top: 47%\" id=\"Bloque18\"\n            src=\"../../../../assets/Img/Ubicacion.png\" width=\"70\" height=\"70\" (click)=\"ToMap()\">\n            {{circunferrocarril._id}} {{circunferrocarril.count}}\n        </h2>\n    </div>\n</div>\n\n<!-- <div style=\"width: 150px; margin: 0 auto\">\n    <button type=\"button\" class=\"btn btn-outline-success\" (click)=\"ToMap()\"> Aceptar </button>\n</div> -->\n\n\n\n<style>\n    canvas{\n        margin: 0 auto;\n        display: block;\n        align-content: center;\n    }\n    h1 {\n        text-align: center;\n        margin-top: 20px;\n    }\n    h2 {\n        text-align: center;\n        color: rgb(63, 57, 57);\n        font-size: 40px;\n    }\n</style>\n";
     /***/
   },
 
@@ -2159,12 +2159,34 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         this.deviceService = deviceService;
         this.carroBlanco = new Image();
         this.Disponibles = [];
+        this.parqueadero18 = {
+          _id: '',
+          count: 0
+        };
+        this.circunregional = {
+          _id: '',
+          count: 0
+        };
+        this.circunbarranquilla = {
+          _id: '',
+          count: 0
+        };
+        this.circunferrocarril = {
+          _id: '',
+          count: 0
+        };
+        this.parqueaderomuua = {
+          _id: '',
+          count: 0
+        };
         this.deviceService.getEmptiesCount().subscribe(function (data) {
-          // data.map(i=>{
-          //   this.Disponibles.push(i.count);
-          // })
           _this8.Disponibles = data;
           console.log(_this8.Disponibles);
+          _this8.parqueaderomuua = _this8.Disponibles[0];
+          _this8.parqueadero18 = _this8.Disponibles[1];
+          _this8.circunregional = _this8.Disponibles[2];
+          _this8.circunferrocarril = _this8.Disponibles[3];
+          _this8.circunbarranquilla = _this8.Disponibles[4];
         });
       }
 
