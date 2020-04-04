@@ -10,7 +10,7 @@ router.patch("/:id", authController.verifyToken, userController.updateUser);
 
 router.delete(":id", authController.verifyToken, userController.deleteUser);
 
-router.post("/", authController.verifyToken, userController.createUser);
+router.post("/", userController.createUser);
 
 router.post("/login", userController.loginUser);
 

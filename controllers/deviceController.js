@@ -67,7 +67,7 @@ const createDevice = async (req, res) => {
           console.log(error);
           res.status(502).json({
             message: "Error",
-            error: error.response.data
+            error: error.response
           });
         });
     })
