@@ -17,7 +17,9 @@ const opts = {
 // circunvalarferrocarril
 // circunvalarregional
 // circunvalarbarranquilla
+
 const initIo = io => {
+
   io.on("connection", socket => {
     socket.on("Join", room => {
       socket.join(room);
@@ -61,6 +63,7 @@ const saveRecord = async uplink => {
     await deviceModel.findByIdAndUpdate(uplink.dev_id, { state });
   } else console.log("Mensaje de dispositivo apagado");
 };
+
 const listen = io => {
   initIo(io);
   client.on("connect", () => {

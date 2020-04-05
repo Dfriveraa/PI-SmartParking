@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const getAllUsers = (req, res) => {
+  console.log('getallusers')
   res.json({
     status: "Not found",
     message: "try again more later"
