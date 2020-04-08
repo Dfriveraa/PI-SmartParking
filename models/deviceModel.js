@@ -65,7 +65,12 @@ const deviceSchema = new Schema(
       type: Date,
       required: [false, "Por defecto inicia libre"],
       default: new Date()
-    }
+    },
+    battery:{
+    type: mongoose.Decimal128,
+      required: [false, "Batería por defecto en 3.7"],
+    default:3.7,
+  }
   },
   {
     versionKey: false // You should be aware of the outcome after set to false

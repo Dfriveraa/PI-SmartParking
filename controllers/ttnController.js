@@ -60,9 +60,18 @@ const saveRecord = async uplink => {
         { end: Date.now(), state: "Libre" }
       );
     }
-    await deviceModel.findByIdAndUpdate(uplink.dev_id, { state });
+    await deviceModel.findByIdAndUpdate(uplink.dev_id, { state ,battery,lastKeepAlive: new Date()});
   } else console.log("Mensaje de dispositivo apagado");
 };
+const saveKeepAlive= async uplink=>{
+  const dev_id=uplink.dev_id;
+  const battery=uplink.payload_fields.battery;
+
+  await deviceModel.findOneAndUpdate(
+  {_id:dev_id},
+  {lastKeepAlive:new Date(),battery:battery}
+  )
+}
 
 const listen = io => {
   initIo(io);
@@ -72,10 +81,7 @@ const listen = io => {
         let uplink = JSON.parse(message.toString());
         let aux = uplink.dev_id.split("_");
         if (uplink.port === 2) {
-          await deviceModel.findOneAndUpdate(
-            { _id: uplink.dev_id },
-            { lastKeepAlive: new Date() }
-          );
+          await saveKeepAlive(uplink);
         } else {
           await saveRecord(uplink);
         }
