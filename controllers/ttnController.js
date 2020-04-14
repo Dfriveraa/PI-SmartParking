@@ -1,8 +1,8 @@
 const mqtt = require("mqtt");
-const client = mqtt.connect("mqtts://us-west.thethings.network", {
-  username: process.env.TTN_APPID,
-  port: 8883,
-  password: process.env.TTN_KEY
+const client = mqtt.connect("mqtt://ioticos.org", {
+  username: "zoAdbG2cjLqF3bm",
+  port: 1883,
+  password: "Zy0DXgPoIrDEYZr"
 });
 const recordModel = require("../models/recordModel");
 const deviceModel = require("../models/deviceModel");
@@ -17,6 +17,34 @@ const opts = {
 // circunvalarferrocarril
 // circunvalarregional
 // circunvalarbarranquilla
+const format=message=>{
+
+  let split=message.split(",");
+  let stateSplit;
+  let decode;
+  if (split[0]==='1'){
+
+    if (split[2]==='0'){
+      stateSplit="Ocupado";
+    }
+    else stateSplit="Libre";
+    decode={
+      port:split[0]*1,
+      dev_id:split[1],
+      state:stateSplit,
+      battery:split[3]
+    }
+  }
+  else{
+    decode={
+      port:split[0]*1,
+      dev_id:split[1],
+      battery:split[2]
+    }
+  }
+  return decode;
+
+}
 
 const initIo = io => {
 
@@ -37,14 +65,14 @@ const initIo = io => {
 };
 
 const saveRecord = async uplink => {
-  console.log(uplink.payload_fields);
-  const { state, battery } = uplink.payload_fields;
+  console.log(uplink);
+  const { state, battery } = uplink;
   //truchazo para no tracker mensajes de un dispositivo dormido
   const dev = await deviceModel.findById(uplink.dev_id);
   if (dev.state !== "Sleep") {
     let aux = uplink.dev_id.split("_");
     const location = { sector: aux[0], identifier: aux[1] * 1 };
-    if (state === "Ocupado") {
+    if (state === 'Ocupado') {
       const start = new Date();
       const record = new recordModel({
         device: uplink.dev_id,
@@ -63,9 +91,11 @@ const saveRecord = async uplink => {
     await deviceModel.findByIdAndUpdate(uplink.dev_id, { state ,battery,lastKeepAlive: new Date()});
   } else console.log("Mensaje de dispositivo apagado");
 };
+
+
 const saveKeepAlive= async uplink=>{
   const dev_id=uplink.dev_id;
-  const battery=uplink.payload_fields.battery;
+  const battery=uplink.battery;
 
   await deviceModel.findOneAndUpdate(
   {_id:dev_id},
@@ -76,9 +106,9 @@ const saveKeepAlive= async uplink=>{
 const listen = io => {
   initIo(io);
   client.on("connect", () => {
-    client.subscribe("+/devices/+/up", (err, topic) => {
+    client.subscribe('JubZ2d6exOOS2CV/pub/+', (err, topic) => {
       client.on("message", async (topic, message) => {
-        let uplink = JSON.parse(message.toString());
+        let uplink = format(message.toString());
         let aux = uplink.dev_id.split("_");
         if (uplink.port === 2) {
           await saveKeepAlive(uplink);
@@ -97,10 +127,10 @@ const sendDown = async (req, res) => {
   let device = req.body.device;
   let aux = device._id.split("_");
   client.publish(
-    `piparking/devices/${req.body.device._id}/down`,
-    JSON.stringify(opts),
+    `JubZ2d6exOOS2CV/sub/${req.body.device._id}`,
+    'changeMode',
     {
-      retain: true,
+      retain: false,
       qos: 0
     }
   );

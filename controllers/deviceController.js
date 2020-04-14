@@ -9,15 +9,21 @@ const getAllDevices = async (req, res) => {
     return res.status(200).send(l);
   });
 };
-const getDevicesBySector = (req, res) => {
+const getDevicesBySector = async (req, res) => {
   console.log(req.params);
-  deviceModel.find(
+  let dateAux=new Date();
+  const list=await deviceModel.find(
     { "real_location.sector": req.params.sector },
-    { lastKeepAlive: 1, real_location: 1, state: 1, dev_eui: 1 },
-    (err, l) => {
-      return res.status(200).send(l);
-    }
-  );
+    { lastKeepAlive: 1, real_location: 1, state: 1, battery: 1 }).lean(false);
+
+  let finalList=[];
+  list.map(device=> {
+    let auxDev = device.toObject();
+    auxDev.battery = device.battery.toString()*1;
+    auxDev.lastSeen=Math.floor((dateAux.valueOf()-auxDev.lastKeepAlive.valueOf())/1000/60);
+    finalList.push(auxDev);
+  });
+  res.status(200).send(finalList);
 };
 const createDevice = async (req, res) => {
   console.log("Llego");
