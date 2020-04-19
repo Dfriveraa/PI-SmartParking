@@ -67,7 +67,7 @@ const deviceSchema = new Schema(
       default: new Date()
     },
     battery:{
-    type: mongoose.Decimal128,
+    type: Number,
       required: [false, "Batería por defecto en 3.7"],
     default:3.7,
   }

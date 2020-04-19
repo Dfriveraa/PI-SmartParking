@@ -1,7 +1,6 @@
 const User = require("../models/userModel");
 const jwt = require("jsonwebtoken");
 const getAllUsers = (req, res) => {
-  console.log('getallusers')
   res.json({
     status: "Not found",
     message: "try again more later"
@@ -23,10 +22,9 @@ const createUser = async (req, res) => {
   const newUser = new User({ username, password, name });
 
   await newUser.save();
-  const token = jwt.sign({ _id: newUser.username }, "secretkey", {
+  const token = jwt.sign({ _id: newUser.username }, process.env.JWT_SECRET, {
     expiresIn: "1d"
   });
-
   res.status(200).json({
     token: token
   });
@@ -59,7 +57,7 @@ const loginUser = async (req, res) => {
 
     if (!isMatch) return res.status(401).send(" Invalid password");
 
-    const token = jwt.sign({ _id: user.username }, "secretkey", {
+    const token = jwt.sign({ _id: user.username }, process.env.JWT_SECRET, {
       expiresIn: "1d"
     });
 

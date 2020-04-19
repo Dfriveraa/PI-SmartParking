@@ -9,7 +9,6 @@ const Statistic = require("../models/statisticsModel");
 
 const getStatistics = (req, res) => {
   const { month, week, sector } = req.body;
-  console.log(req.body);
   Statistic.find(
     { date: { month, week }, sector: sector },
     { date: 1, percentage: 1, canvas_location: 1 },

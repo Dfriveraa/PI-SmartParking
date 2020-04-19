@@ -1,8 +1,8 @@
 const mqtt = require("mqtt");
 const client = mqtt.connect({
-  username: "integrador",
-  port: 1883,
-  password: "integrador"
+  username: process.env.MQTT_USER,
+  port: process.env.MQTT_PORT,
+  password: process.env.MQTT_PASSWORD
 });
 const recordModel = require("../models/recordModel");
 const deviceModel = require("../models/deviceModel");
@@ -51,21 +51,17 @@ const initIo = io => {
   io.on("connection", socket => {
     socket.on("Join", room => {
       socket.join(room);
-      console.log("new lisener in ", room);
-
       deviceModel.find({ "real_location.sector": room }, (err, list) => {
         socket.emit("initial", list);
       });
     });
     socket.on("disconnect", () => {
       socket.disconnect(0);
-      console.log("disconected");
     });
   });
 };
 
 const saveRecord = async uplink => {
-  console.log(uplink);
   const { state, battery } = uplink;
   //truchazo para no tracker mensajes de un dispositivo dormido
   const dev = await deviceModel.findById(uplink.dev_id);
@@ -125,36 +121,29 @@ const listen = io => {
 
 const sendDown = async (req, res) => {
   let device = req.body.device;
-  let aux = device._id.split("_");
-console.log(req.body.device._id);  
-client.publish(
-    `parking/sub/${req.body.device._id}`,
-    'changeMode',
-    {
-      retain: false,
-      qos: 0
-    }
-  );
+  client.publish(
+      `parking/sub/${req.body.device._id}`,
+      'changeMode',
+      {
+        retain: false,
+        qos: 0
+      }
+    );
 
-  if (device.state !== "Sleep") {
-    await deviceModel.findOneAndUpdate({ _id: device._id }, { state: "Sleep" });
-    await deviceModel.find(
+  let change=(device.state !== "Sleep")? "Sleep":"Libre";
+  await deviceModel.findOneAndUpdate({_id:device._id},{state:change})
+  const list=await deviceModel.find(
       { "real_location.sector": device.real_location.sector },
-      { lastKeepAlive: 1, real_location: 1, state: 1, dev_eui: 1 },
-      (err, l) => {
-        return res.status(200).send(l);
-      }
-    );
-  } else {
-    await deviceModel.findOneAndUpdate({ _id: device._id }, { state: "Libre" });
-    await deviceModel.find(
-      { "real_location.sector": device.real_location.sector },
-      { lastKeepAlive: 1, real_location: 1, state: 1, dev_eui: 1 },
-      (err, l) => {
-        return res.status(200).send(l);
-      }
-    );
-  }
+      { lastKeepAlive: 1, real_location: 1, state: 1, battery: 1 }).lean(false);
+  let dateAux=new Date();
+  let finalList=[];
+  list.map(device=> {
+    let auxDev = device.toObject();
+    auxDev.lastSeen=Math.floor((dateAux.valueOf()-auxDev.lastKeepAlive.valueOf())/1000/60);
+    finalList.push(auxDev);
+  });
+  res.status(200).send(finalList);
+
 };
 
 module.exports = { sendDown, listen };

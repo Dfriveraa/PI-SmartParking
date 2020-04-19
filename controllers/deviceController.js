@@ -4,13 +4,14 @@ const headers = {
   "Content-Type": "application/json",
   Authorization: `Key ${process.env.TTN_KEY}`
 };
+
 const getAllDevices = async (req, res) => {
   deviceModel.find({}, (err, l) => {
     return res.status(200).send(l);
   });
 };
+
 const getDevicesBySector = async (req, res) => {
-  console.log(req.params);
   let dateAux=new Date();
   const list=await deviceModel.find(
     { "real_location.sector": req.params.sector },
@@ -19,15 +20,13 @@ const getDevicesBySector = async (req, res) => {
   let finalList=[];
   list.map(device=> {
     let auxDev = device.toObject();
-    auxDev.battery = device.battery.toString()*1;
     auxDev.lastSeen=Math.floor((dateAux.valueOf()-auxDev.lastKeepAlive.valueOf())/1000/60);
     finalList.push(auxDev);
   });
   res.status(200).send(finalList);
 };
+
 const createDevice = async (req, res) => {
-  console.log("Llego");
-  console.log(req.body);
 
   const { canvas_location, real_location, dev_eui } = req.body;
   const _id = `${real_location.sector}_${real_location.identifier}`.toLowerCase();
@@ -87,7 +86,6 @@ const createDevice = async (req, res) => {
 };
 
 const deleteDevice = async (req, res) => {
-  console.log(req.params);
   const device = await deviceModel.findByIdAndDelete(req.params.id);
   if (!device) {
     return res.status(404).json({
@@ -117,6 +115,7 @@ const deleteDevice = async (req, res) => {
     data: "Delete success"
   });
 };
+
 const updateDevice = (req, res) => {
   res.json({
     status: "Not found",
@@ -134,6 +133,7 @@ const getCountBySector = (req, res) => {
       return res.status(200).send(result);
     });
 };
+
 module.exports = {
   getAllDevices,
   getDevicesBySector,
