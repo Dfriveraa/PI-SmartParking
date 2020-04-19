@@ -1,8 +1,8 @@
 const mqtt = require("mqtt");
-const client = mqtt.connect("mqtt://ioticos.org", {
-  username: "zoAdbG2cjLqF3bm",
+const client = mqtt.connect({
+  username: "integrador",
   port: 1883,
-  password: "Zy0DXgPoIrDEYZr"
+  password: "integrador"
 });
 const recordModel = require("../models/recordModel");
 const deviceModel = require("../models/deviceModel");
@@ -106,7 +106,7 @@ const saveKeepAlive= async uplink=>{
 const listen = io => {
   initIo(io);
   client.on("connect", () => {
-    client.subscribe('JubZ2d6exOOS2CV/pub/+', (err, topic) => {
+    client.subscribe('parking/pub/+', (err, topic) => {
       client.on("message", async (topic, message) => {
         let uplink = format(message.toString());
         let aux = uplink.dev_id.split("_");
@@ -126,8 +126,9 @@ const listen = io => {
 const sendDown = async (req, res) => {
   let device = req.body.device;
   let aux = device._id.split("_");
-  client.publish(
-    `JubZ2d6exOOS2CV/sub/${req.body.device._id}`,
+console.log(req.body.device._id);  
+client.publish(
+    `parking/sub/${req.body.device._id}`,
     'changeMode',
     {
       retain: false,
